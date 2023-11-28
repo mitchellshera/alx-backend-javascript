@@ -1,3 +1,5 @@
+/* eslint no-var: 0 */
+
 export function taskFirst() {
     const task = 'I prefer const when I can.';
     return task;
