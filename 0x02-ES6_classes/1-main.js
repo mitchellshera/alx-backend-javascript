@@ -1,6 +1,9 @@
-import SkyHighBuilding from './6-sky_high.js';
+import listOfStudents from "./9-hoisting.js";
 
-const building = new SkyHighBuilding(140, 60);
-console.log(building.sqft);
-console.log(building.floors);
-console.log(building.evacuationWarningMessage());
+console.log(listOfStudents);
+
+const listPrinted = listOfStudents.map(
+    student => student.fullStudentDescription
+);
+
+console.log(listPrinted)
