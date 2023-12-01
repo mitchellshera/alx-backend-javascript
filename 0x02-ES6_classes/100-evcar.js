@@ -16,7 +16,7 @@ export default class EVCar extends Car {
 
   // Override cloneCar method to return an instance of Car
   cloneCar() {
-    const CloneSymbol = this.constructor[Symbol.CloneSymbol];
-    return new CloneSymbol();
+    const Species = this.constructor[Symbol.Species];
+    return new Species();
   }
 }
