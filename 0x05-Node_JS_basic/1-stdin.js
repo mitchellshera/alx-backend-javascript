@@ -1,31 +1,33 @@
-// 1-stdin.js
+process.stdout.write('Welcome to the interactive Holberton School program!\n');
 
-// Display the initial prompt
-process.stdout.write('Welcome to Holberton School, what is your name?\n');
+if (process.stdin.isTTY) {
+  process.stdout.write('What is your name?\n');
 
-// Set the encoding for stdin to utf8
-process.stdin.setEncoding('utf8');
+  process.stdin.on('data', (data) => {
+    const input = data.toString().trim();
 
-// Listen for data events on stdin
-process.stdin.on('data', (data) => {
-  // Trim the input to remove leading/trailing whitespaces
-  const input = data.trim();
+    if (input.toLowerCase() === 'exit') {
+      process.stdout.write('This important software is now closing\n');
+      process.exit();
+    }
 
-  // Check if the user entered 'exit', if so, close the program
-  if (input === 'exit') {
-    console.log('This important software is now closing');
+    process.stdout.write(`Your name is: ${input}\n`);
+    process.stdout.write('What is your name?\n');
+  });
+} else {
+  process.stdin.on('data', (data) => {
+    const input = data.toString().trim();
+
+    if (input.toLowerCase() === 'exit') {
+      process.stdout.write('This important software is now closing\n');
+      process.exit();
+    }
+
+    process.stdout.write(`Your name is: ${input}\n`);
     process.exit();
-  }
+  });
 
-  // Display the user's name
-  console.log(`Your name is: ${input}`);
-
-  // Display the prompt again
-  process.stdout.write('Welcome to Holberton School, what is your name?\n');
-});
-
-// Listen for SIGINT (Ctrl+C) event to close the program gracefully
-process.on('SIGINT', () => {
-  console.log('This important software is now closing');
-  process.exit();
-});
+  process.on('exit', () => {
+    process.stdout.write('This important software is now closing\n');
+  });
+}
