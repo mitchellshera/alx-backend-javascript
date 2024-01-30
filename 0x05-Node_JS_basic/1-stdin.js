@@ -1,33 +1,19 @@
-process.stdout.write('Welcome to the interactive Holberton School program!\n');
+const welcomeMessage = 'Welcome to Holberton School! What is your name?\n';
+const closingMessage = 'This important software is now closing\n';
 
-if (process.stdin.isTTY) {
-  process.stdout.write('What is your name?\n');
+process.stdout.write(welcomeMessage);
 
-  process.stdin.on('data', (data) => {
-    const input = data.toString().trim();
+process.stdin.on('data', (data) => {
+  const input = data.toString().trim();
 
-    if (input.toLowerCase() === 'exit') {
-      process.stdout.write('This important software is now closing\n');
-      process.exit();
-    }
-
-    process.stdout.write(`Your name is: ${input}\n`);
-    process.stdout.write('What is your name?\n');
-  });
-} else {
-  process.stdin.on('data', (data) => {
-    const input = data.toString().trim();
-
-    if (input.toLowerCase() === 'exit') {
-      process.stdout.write('This important software is now closing\n');
-      process.exit();
-    }
-
-    process.stdout.write(`Your name is: ${input}\n`);
+  if (input.toLowerCase() === 'exit') {
+    process.stdout.write(closingMessage);
     process.exit();
-  });
+  }
 
-  process.on('exit', () => {
-    process.stdout.write('This important software is now closing\n');
-  });
-}
+  process.stdout.write(`Your name is: ${input}\n${welcomeMessage}`);
+});
+
+process.on('exit', () => {
+  process.stdout.write(closingMessage);
+});
