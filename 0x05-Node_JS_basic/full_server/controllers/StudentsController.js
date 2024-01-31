@@ -30,8 +30,10 @@ class StudentsController {
 
     try {
       const studentsData = await readDatabase(process.argv[2].toString());
-      if (!(field in studentsData)) {
+      if (!field || (field !== 'CS' && field !== 'SWE')) {
         res.status(400).send('Major parameter must be CS or SWE');
+      } else if (!(field in studentsData)) {
+        res.status(500).send(`No data available for major: ${field}`);
       } else {
         res.status(200).send(`List: ${studentsData[field].join(', ')}`);
       }
