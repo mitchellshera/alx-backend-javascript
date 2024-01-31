@@ -1,11 +1,11 @@
 const http = require('http');
-const { countStudents } = require('./3-read_file_async');
+const { countStudents } = require('./3-read_file_async'); // Import the countStudents function from 3-read_file_async.js
 
 const hostname = '127.0.0.1';
 const port = 1245;
 
 // Create an HTTP server
-const app = http.createServer((req, res) => {
+const app = http.createServer(async (req, res) => {
   res.statusCode = 200;
 
   // Set the response header to plain text
@@ -15,14 +15,13 @@ const app = http.createServer((req, res) => {
   if (req.url === '/') {
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
-    // Call countStudents function with the database file name as an argument
-    countStudents('database.csv')
-      .then(() => {
-        res.end('This is the list of our students');
-      })
-      .catch((error) => {
-        res.end(`Error: ${error.message}`);
-      });
+    try {
+      // Call countStudents function with the database file name as an argument
+      await countStudents('database.csv');
+      res.end('This is the list of our students');
+    } catch (error) {
+      res.end(`Error: ${error.message}`);
+    }
   } else {
     res.end('Not Found');
   }
