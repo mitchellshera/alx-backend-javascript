@@ -1,0 +1,37 @@
+const http = require('http');
+const { countStudents } = require('./3-read_file_async');
+
+const hostname = '127.0.0.1';
+const port = 1245;
+
+// Create an HTTP server
+const app = http.createServer((req, res) => {
+  res.statusCode = 200;
+
+  // Set the response header to plain text
+  res.setHeader('Content-Type', 'text/plain');
+
+  // Check the URL path and send the appropriate response
+  if (req.url === '/') {
+    res.end('Hello Holberton School!');
+  } else if (req.url === '/students') {
+    // Call countStudents function with the database file name as an argument
+    countStudents('database.csv')
+      .then(() => {
+        res.end('This is the list of our students');
+      })
+      .catch((error) => {
+        res.end(`Error: ${error.message}`);
+      });
+  } else {
+    res.end('Not Found');
+  }
+});
+
+// Make the server listen on port 1245
+app.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
+
+// Export the app variable
+module.exports = app;
